@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minoru Maeshiro — Builder of Risk, Investment & AI Systems</title>
+<meta name="description" content="Minoru (Ronny) Maeshiro — 15+ years building decision systems across credit risk, investment analytics, and applied AI.">
+<style>
+  /* ============================================================
+     DESIGN TOKENS
+     Palette: "Quant desk after hours" — deep slate ink, paper,
+     a signal-amber accent (the color of a flagged metric), and a
+     muted teal for the AI/secondary register. Type pairs a
+     characterful serif (Fraunces) for voice with a precise grotesk
+     (Space Grotesk) for structure and a mono (Space Mono) for data.
+     ============================================================ */
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+  :root{
+    --ink:#13181f;
+    --ink-2:#1c232d;
+    --paper:#f3efe7;
+    --paper-2:#e9e3d6;
+    --line:#cbc3b2;
+    --muted:#6a7280;
+    --amber:#d68a1e;
+    --amber-soft:#f0c478;
+    --teal:#2f7d72;
+    --teal-soft:#9fc9c0;
+    --white:#fbfaf6;
+    --maxw:1140px;
+    --r:14px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Space Grotesk',system-ui,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+  /* ---------- eyebrow / labels ---------- */
+  .eyebrow{
+    font-family:'Space Mono',monospace;
+    font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--amber);font-weight:700;
+    display:inline-flex;align-items:center;gap:.55em;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--amber)}
+
+  /* ============================================================
+     NAV
+     ============================================================ */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(243,239,231,.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{
+    font-family:'Space Mono',monospace;font-weight:700;font-size:.9rem;
+    letter-spacing:.04em;text-decoration:none;color:var(--ink);
+    display:flex;align-items:center;gap:.6em;
+  }
+  .brand .dot{width:9px;height:9px;background:var(--amber);border-radius:50%;box-shadow:0 0 0 4px rgba(214,138,30,.18)}
+  .navlinks{display:flex;gap:6px;align-items:center}
+  .navlinks a{
+    font-size:.82rem;text-decoration:none;color:var(--ink-2);
+    padding:8px 13px;border-radius:8px;font-weight:500;transition:background .15s,color .15s;
+  }
+  .navlinks a:hover{background:var(--paper-2)}
+  .navlinks a.cta{background:var(--ink);color:var(--white);font-weight:600}
+  .navlinks a.cta:hover{background:var(--ink-2)}
+  .menubtn{display:none;background:none;border:1px solid var(--line);border-radius:8px;padding:8px 11px;font-size:1rem;cursor:pointer}
+  @media(max-width:760px){
+    .navlinks{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:var(--paper);border-bottom:1px solid var(--line);padding:10px 28px 18px;gap:2px}
+    .navlinks.open{display:flex}
+    .navlinks a{padding:11px 12px}
+    .menubtn{display:block}
+  }
+
+  /* ============================================================
+     HERO
+     ============================================================ */
+  .hero{position:relative;padding:78px 0 46px;overflow:hidden}
+  .hero .wrap{position:relative;z-index:2}
+  .hero h1{
+    font-family:'Fraunces',serif;font-weight:500;
+    font-size:clamp(2.5rem,6.2vw,4.7rem);line-height:1.02;
+    letter-spacing:-.015em;max-width:16ch;margin:.35em 0 .5em;
+  }
+  .hero h1 em{font-style:italic;color:var(--amber)}
+  .hero .lead{font-size:clamp(1.02rem,1.9vw,1.22rem);max-width:54ch;color:var(--ink-2)}
+  .hero .lead b{font-weight:600}
+
+  .domains{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+  .chip{
+    font-family:'Space Mono',monospace;font-size:.74rem;letter-spacing:.03em;
+    padding:7px 13px;border-radius:999px;border:1px solid var(--line);
+    background:var(--white);display:inline-flex;align-items:center;gap:.5em;
+  }
+  .chip .k{width:7px;height:7px;border-radius:2px}
+  .chip.c-risk .k{background:var(--amber)}
+  .chip.c-invest .k{background:var(--teal)}
+  .chip.c-ai .k{background:var(--ink)}
+
+  /* stat ribbon */
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+    background:var(--line);border:1px solid var(--line);border-radius:var(--r);
+    overflow:hidden;margin-top:42px;
+  }
+  .stat{background:var(--paper);padding:22px 20px}
+  .stat .n{font-family:'Fraunces',serif;font-size:clamp(1.7rem,3.4vw,2.4rem);font-weight:600;line-height:1;letter-spacing:-.02em}
+  .stat .l{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-top:9px}
+  @media(max-width:680px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+  /* faint grid backdrop */
+  .hero::after{
+    content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:46px 46px;opacity:.16;
+    -webkit-mask-image:radial-gradient(ellipse 80% 60% at 78% 12%,#000,transparent 70%);
+    mask-image:radial-gradient(ellipse 80% 60% at 78% 12%,#000,transparent 70%);
+  }
+
+  /* ============================================================
+     SECTION SHELL
+     ============================================================ */
+  section{padding:62px 0;border-top:1px solid var(--line)}
+  .sechead{margin-bottom:34px;max-width:60ch}
+  .sechead h2{
+    font-family:'Fraunces',serif;font-weight:500;
+    font-size:clamp(1.7rem,3.6vw,2.5rem);letter-spacing:-.01em;margin:.32em 0 .2em;
+  }
+  .sechead p{color:var(--ink-2);font-size:1.02rem;max-width:56ch}
+
+  /* ============================================================
+     ABOUT
+     ============================================================ */
+  .about-grid{display:grid;grid-template-columns:1.4fr .9fr;gap:46px}
+  @media(max-width:860px){.about-grid{grid-template-columns:1fr;gap:30px}}
+  .about-body p{margin-bottom:1.05em;font-size:1.05rem;color:var(--ink-2)}
+  .about-body p:first-child{font-size:1.15rem;color:var(--ink)}
+  .about-body strong{font-weight:600;color:var(--ink)}
+  .sidecard{
+    background:var(--ink);color:var(--paper);border-radius:var(--r);padding:26px 24px;
+    align-self:start;position:sticky;top:84px;
+  }
+  .sidecard h3{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--amber-soft);margin-bottom:16px}
+  .sidecard .row{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:.9rem}
+  .sidecard .row:last-child{border-bottom:none}
+  .sidecard .row span:first-child{color:var(--teal-soft)}
+  .sidecard .row span:last-child{text-align:right;font-weight:500}
+  .sidecard .dl{
+    display:inline-flex;align-items:center;gap:.5em;margin-top:18px;
+    font-family:'Space Mono',monospace;font-size:.8rem;color:var(--ink);
+    background:var(--amber-soft);padding:10px 15px;border-radius:8px;text-decoration:none;font-weight:700;
+    transition:transform .15s;
+  }
+  .sidecard .dl:hover{transform:translateY(-2px)}
+
+  /* ============================================================
+     PROJECTS  (the centerpiece)
+     ============================================================ */
+  .project{
+    border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+    background:var(--white);margin-bottom:30px;
+  }
+  .p-head{padding:24px 26px;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap}
+  .p-head .tag{
+    font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;
+    padding:5px 11px;border-radius:6px;font-weight:700;white-space:nowrap;
+  }
+  .tag.risk{background:rgba(214,138,30,.14);color:#9a5e0a}
+  .tag.invest{background:rgba(47,125,114,.14);color:var(--teal)}
+  .tag.ai{background:rgba(19,24,31,.1);color:var(--ink)}
+  .p-head h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.5rem;letter-spacing:-.01em;line-height:1.15}
+  .p-head .blurb{color:var(--ink-2);font-size:.98rem;margin-top:7px;max-width:62ch}
+  .p-head .pstatus{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--muted);margin-top:10px;display:flex;align-items:center;gap:.5em}
+  .p-head .pstatus .live{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 3px rgba(47,125,114,.2)}
+
+  .p-videos{border-top:1px solid var(--line);padding:22px 26px 28px;background:var(--paper)}
+  .vlabel{font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+  .vcard{background:var(--white);border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+  .vcard .frame{position:relative;aspect-ratio:16/9;background:var(--ink);overflow:hidden}
+  .vcard video{width:100%;height:100%;object-fit:cover;display:block;background:#000}
+  .vcard .meta{padding:12px 14px}
+  .vcard .vt{font-weight:600;font-size:.95rem;display:flex;align-items:center;gap:.5em}
+  .vcard .vt .badge{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border-radius:5px;background:var(--paper-2);color:var(--muted);font-weight:700}
+  .vcard .vt .badge.ov{background:var(--amber-soft);color:#6e4408}
+  .vcard .vd{font-size:.83rem;color:var(--muted);margin-top:4px}
+
+  /* coming-soon placeholder card for future uploads */
+  .vsoon{
+    border:1px dashed var(--line);border-radius:10px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;padding:26px 18px;color:var(--muted);
+    background:repeating-linear-gradient(45deg,transparent,transparent 9px,rgba(203,195,178,.12) 9px,rgba(203,195,178,.12) 18px);
+    min-height:170px;
+  }
+  .vsoon .ic{font-size:1.4rem;margin-bottom:8px;opacity:.6}
+  .vsoon .t{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase}
+  .vsoon .s{font-size:.8rem;margin-top:5px}
+
+  /* ============================================================
+     SKILLS
+     ============================================================ */
+  .skill-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:860px){.skill-cols{grid-template-columns:1fr}}
+  .skillcard{border:1px solid var(--line);border-radius:var(--r);padding:24px;background:var(--white)}
+  .skillcard h3{font-family:'Space Mono',monospace;font-size:.74rem;letter-spacing:.13em;text-transform:uppercase;display:flex;align-items:center;gap:.55em;margin-bottom:16px}
+  .skillcard h3 .k{width:9px;height:9px;border-radius:3px}
+  .k-build .k{background:var(--ink)}
+  .k-data .k{background:var(--teal)}
+  .k-domain .k{background:var(--amber)}
+  .taglist{display:flex;flex-wrap:wrap;gap:7px}
+  .taglist span{font-size:.82rem;padding:5px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper)}
+
+  /* ============================================================
+     ACHIEVEMENTS
+     ============================================================ */
+  .ach{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+  @media(max-width:680px){.ach{grid-template-columns:1fr}}
+  .achitem{background:var(--white);padding:24px 22px}
+  .achitem .n{font-family:'Fraunces',serif;font-weight:600;font-size:1.9rem;letter-spacing:-.02em;line-height:1}
+  .achitem .n .u{font-size:1.1rem;color:var(--amber)}
+  .achitem .d{margin-top:9px;color:var(--ink-2);font-size:.95rem}
+  .achitem .ctx{font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:11px}
+
+  /* ============================================================
+     CONTACT
+     ============================================================ */
+  #contact{background:var(--ink);color:var(--paper);border-top:none}
+  #contact .sechead h2{color:var(--white)}
+  #contact .sechead p{color:var(--paper-2)}
+  #contact .eyebrow{color:var(--amber-soft)}
+  #contact .eyebrow::before{background:var(--amber-soft)}
+  .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .ccard{
+    background:var(--ink-2);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);
+    padding:22px;text-decoration:none;color:var(--paper);transition:transform .15s,border-color .15s;display:block;
+  }
+  .ccard:hover{transform:translateY(-3px);border-color:var(--amber-soft)}
+  .ccard .l{font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-soft)}
+  .ccard .v{font-size:1.02rem;margin-top:8px;font-weight:500;word-break:break-word}
+  footer{padding:30px 0 50px;text-align:center}
+  footer .f{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--paper-2);letter-spacing:.05em}
+
+  /* reveal on scroll */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+  :focus-visible{outline:3px solid var(--amber);outline-offset:2px;border-radius:4px}
+</style>
+</head>
+<body>
+
+<!-- ============================ NAV ============================ -->
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="dot"></span>MAESHIRO<span style="color:var(--muted)">·M</span></a>
+    <button class="menubtn" aria-label="Menu" onclick="document.getElementById('nl').classList.toggle('open')">☰</button>
+    <div class="navlinks" id="nl">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#achievements">Achievements</a>
+      <a href="#contact" class="cta">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================ HERO ============================ -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <span class="eyebrow">Product · Risk · Applied AI</span>
+    <h1>I build the <em>decision systems</em> behind lending, investing & AI.</h1>
+    <p class="lead">I'm <b>Minoru “Ronny” Maeshiro</b> — 15+ years turning messy, high-stakes data into products people actually use. I've led credit-risk strategy across emerging markets, shipped GenAI &amp; ML products at Oracle, and I build working applications end-to-end: <b>credit risk, investment analytics, and AI agents.</b></p>
+
+    <div class="domains">
+      <span class="chip c-risk"><span class="k"></span>Credit &amp; Risk</span>
+      <span class="chip c-invest"><span class="k"></span>Investment Analytics</span>
+      <span class="chip c-ai"><span class="k"></span>Applied AI / Agents</span>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="n">15+</div><div class="l">Years building</div></div>
+      <div class="stat"><div class="n">$26M</div><div class="l">Portfolio led, +45%</div></div>
+      <div class="stat"><div class="n">50%+</div><div class="l">Default reduction</div></div>
+      <div class="stat"><div class="n">5+</div><div class="l">AI/ML products shipped</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============================ ABOUT ============================ -->
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-body reveal">
+        <span class="eyebrow">About</span>
+        <h2 style="font-family:'Fraunces',serif;font-weight:500;font-size:clamp(1.7rem,3.6vw,2.5rem);letter-spacing:-.01em;margin:.3em 0 .55em">A builder who's equally at home in a risk committee and a code editor.</h2>
+        <p>My career started on the ground in financial services — as <strong>VP of Credit Risk</strong> at a Bolivian microfinance institution, where I led 120+ people, grew a lending portfolio to <strong>$26M (+45%)</strong>, and redesigned products that cut defaults by more than half for underserved borrowers.</p>
+        <p>I then spent years as a <strong>risk &amp; analytics consultant</strong>, delivering credit-scoring and compliance tools to 15+ financial institutions and designing a national over-indebtedness model for a country's financial regulator.</p>
+        <p>At <strong>Oracle</strong>, I moved into product — leading roadmaps for 5+ AI/ML products spanning LLM/agent evaluation, MLOps, and AI governance, while building Python prototypes, data pipelines, and financial models myself.</p>
+        <p>What ties it together isn't one domain — it's the <strong>shape of the problem</strong>: ambiguous data, real consequences, and a system that has to earn trust. Today I build full applications across credit risk, investing, and AI agents. The projects below are working tools, not slideware.</p>
+      </div>
+
+      <aside class="sidecard reveal">
+        <h3>At a glance</h3>
+        <div class="row"><span>Based in</span><span>Bay Area, CA</span></div>
+        <div class="row"><span>Focus</span><span>Risk · Investing · AI</span></div>
+        <div class="row"><span>Education</span><span>MS Analytics · MBA</span></div>
+        <div class="row"><span>GPA</span><span>3.97 — Dean's Award</span></div>
+        <div class="row"><span>Languages</span><span>English · Spanish (native)</span></div>
+        <div class="row"><span>Stack</span><span>Python · SQL · LLMs</span></div>
+        <a class="dl" href="docs/1_Maeshiro_Resume.pdf" target="_blank" rel="noopener">↓ Download résumé (PDF)</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ PROJECTS ============================ -->
+<section id="projects">
+  <div class="wrap">
+    <div class="sechead reveal">
+      <span class="eyebrow">Projects · The work itself</span>
+      <h2>Applications I've built, on video.</h2>
+      <p>Each project leads with a short overview, then deeper walkthroughs. More tools and guides are landing here as I record them.</p>
+    </div>
+
+    <!-- =====================================================
+         PROJECTS RENDER HERE (generated from the array below)
+         ===================================================== -->
+    <div id="project-list"></div>
+  </div>
+</section>
+
+<!-- ============================ SKILLS ============================ -->
+<section id="skills">
+  <div class="wrap">
+    <div class="sechead reveal">
+      <span class="eyebrow">Skills</span>
+      <h2>What I bring to the table.</h2>
+    </div>
+    <div class="skill-cols">
+      <div class="skillcard reveal k-build">
+        <h3><span class="k"></span>Build &amp; Product</h3>
+        <div class="taglist">
+          <span>Product Vision &amp; Roadmaps</span><span>PRDs &amp; MVP Definition</span><span>0-to-1 Development</span><span>Cross-Functional Leadership</span><span>Agile</span><span>Stakeholder Management</span><span>Full Product Lifecycle</span><span>App Development</span>
+        </div>
+      </div>
+      <div class="skillcard reveal k-data">
+        <h3><span class="k"></span>Data &amp; AI</h3>
+        <div class="taglist">
+          <span>Python</span><span>SQL</span><span>LLM / Agent Evaluation</span><span>Agentic Workflows</span><span>ML / NLP</span><span>Model Validation</span><span>MLOps / AgentOps</span><span>Data Pipelines &amp; ETL</span><span>OCI Architecture</span><span>Hallucination Metrics</span>
+        </div>
+      </div>
+      <div class="skillcard reveal k-domain">
+        <h3><span class="k"></span>Domain</h3>
+        <div class="taglist">
+          <span>Credit Risk Modeling</span><span>Investment Analytics</span><span>Responsible AI Governance</span><span>Financial Modeling</span><span>Operational Risk</span><span>Compliance &amp; Regulation</span><span>Portfolio Strategy</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ ACHIEVEMENTS ============================ -->
+<section id="achievements">
+  <div class="wrap">
+    <div class="sechead reveal">
+      <span class="eyebrow">Achievements</span>
+      <h2>A few results worth flagging.</h2>
+    </div>
+    <div class="ach reveal">
+      <div class="achitem">
+        <div class="n">$26<span class="u">M</span></div>
+        <div class="d">Lending portfolio led to a 45% increase while expanding from 3 to 7 states.</div>
+        <div class="ctx">Agrocapital · VP Credit Risk</div>
+      </div>
+      <div class="achitem">
+        <div class="n">50%<span class="u">+</span></div>
+        <div class="d">Reduction in loan defaults via a redesigned village-banking credit product.</div>
+        <div class="ctx">Microfinance · Emerging markets</div>
+      </div>
+      <div class="achitem">
+        <div class="n">5<span class="u">+</span></div>
+        <div class="d">AI/ML products taken through full-lifecycle roadmaps, from LLM evaluation to MLOps.</div>
+        <div class="ctx">Oracle · Product Management</div>
+      </div>
+      <div class="achitem">
+        <div class="n">3.97<span class="u">/4</span></div>
+        <div class="d">MS in Business Analytics (Data Science), earning the Dean's Award. MBA with honors.</div>
+        <div class="ctx">UT Dallas · UCB</div>
+      </div>
+      <div class="achitem">
+        <div class="n">15<span class="u">+</span></div>
+        <div class="d">Financial institutions served with credit-scoring &amp; compliance analytics tools.</div>
+        <div class="ctx">Scalar Consulting · Director</div>
+      </div>
+      <div class="achitem">
+        <div class="n">1<span class="u">×</span></div>
+        <div class="d">National over-indebtedness model designed for a country's financial regulator.</div>
+        <div class="ctx">Systemic risk · Regulatory</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CONTACT ============================ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="sechead reveal">
+      <span class="eyebrow">Contact</span>
+      <h2>Let's build something.</h2>
+      <p>Open to roles and conversations across risk, fintech, investing, and applied AI.</p>
+    </div>
+    <div class="contact-grid reveal">
+      <a class="ccard" href="mailto:minoruronny.maeshiro@gmail.com">
+        <div class="l">Email</div>
+        <div class="v">minoruronny.maeshiro@gmail.com</div>
+      </a>
+      <a class="ccard" href="https://linkedin.com/in/minorumaeshiro" target="_blank" rel="noopener">
+        <div class="l">LinkedIn</div>
+        <div class="v">/in/minorumaeshiro</div>
+      </a>
+      <a class="ccard" href="tel:+19403950387">
+        <div class="l">Phone</div>
+        <div class="v">(940) 395-0387</div>
+      </a>
+      <a class="ccard" href="docs/1_Maeshiro_Resume.pdf" target="_blank" rel="noopener">
+        <div class="l">Résumé</div>
+        <div class="v">Download PDF ↓</div>
+      </a>
+    </div>
+  </div>
+  <footer><div class="wrap"><span class="f">© <span id="yr"></span> Minoru Maeshiro · Built &amp; hosted on GitHub Pages</span></div></footer>
+</section>
+
+<script>
+/* ============================================================
+   PROJECT DATA  —  EDIT THIS to add projects & videos later.
+   ------------------------------------------------------------
+   To ADD A NEW VIDEO to a project:
+     1. Drop the .mp4 into the /videos folder in your repo.
+     2. Add an object to that project's "videos" array:
+          { type:"guide", title:"My new guide", src:"videos/FILENAME.mp4", note:"optional caption" }
+        - type:"overview"  -> amber "Overview" badge (use one per project)
+        - type:"guide"     -> grey "User Guide" badge
+   To ADD A NEW PROJECT:
+     - Copy a whole {...} block, change the fields, give it a new tag
+       ("risk" | "invest" | "ai"). Leave "videos:[]" empty to show a
+       "coming soon" placeholder until you upload.
+   No other code changes needed.
+   ============================================================ */
+  const PROJECTS = [
+    {
+      tag:"risk", tagLabel:"Credit & Risk",
+      title:"Credit Risk Studio",
+      blurb:"An end-to-end credit scoring application — build, validate, and explain scorecards, then monitor portfolio risk in one workflow.",
+      status:"Live · deployed",
+      videos:[
+        { type:"overview", title:"Platform Intro", src:"videos/0_Credit_Risk_Studio__PlatformIntro.mp4", note:"Tool overview — what it does & why" },
+        { type:"guide",    title:"Navigating the Studio", src:"videos/1_CreditRisk_Navigation.mp4", note:"User guide — moving through the app" }
+      ]
+    },
+    {
+      tag:"invest", tagLabel:"Investment Analytics",
+      title:"Investing Tool",
+      blurb:"An investment analysis application for screening, evaluating, and stress-testing opportunities against fundamentals and market signals.",
+      status:"Video coming soon",
+      videos:[] // <- add { type:"overview", title:"...", src:"videos/....mp4" } when ready
+    },
+    {
+      tag:"ai", tagLabel:"Applied AI / Agents",
+      title:"Market Research Tool",
+      blurb:"An AI-agent application that synthesizes company fundamentals and news-driven signals into structured, decision-ready market intelligence.",
+      status:"Video coming soon",
+      videos:[]
+    }
+  ];
+
+  /* ---- render ---- */
+  function videoCard(v){
+    const badge = v.type==="overview"
+      ? '<span class="badge ov">Overview</span>'
+      : '<span class="badge">User Guide</span>';
+    return `
+      <div class="vcard">
+        <div class="frame">
+          <video controls preload="metadata" playsinline>
+            <source src="${v.src}" type="video/mp4">
+            Your browser doesn't support embedded video.
+          </video>
+        </div>
+        <div class="meta">
+          <div class="vt">${v.title} ${badge}</div>
+          ${v.note ? `<div class="vd">${v.note}</div>` : ``}
+        </div>
+      </div>`;
+  }
+  function soonCard(){
+    return `<div class="vsoon"><div class="ic">⧗</div><div class="t">Video coming soon</div><div class="s">Walkthrough is being recorded</div></div>`;
+  }
+  function projectBlock(p){
+    const vids = p.videos.length
+      ? p.videos.map(videoCard).join("")
+      : soonCard();
+    return `
+      <article class="project reveal">
+        <div class="p-head">
+          <div>
+            <span class="tag ${p.tag}">${p.tagLabel}</span>
+            <h3 style="margin-top:12px">${p.title}</h3>
+            <div class="blurb">${p.blurb}</div>
+            <div class="pstatus"><span class="${p.videos.length?'live':''}"></span>${p.status}</div>
+          </div>
+        </div>
+        <div class="p-videos">
+          <div class="vlabel">${p.videos.length?'Watch':'Walkthroughs'} ›</div>
+          <div class="vgrid">${vids}</div>
+        </div>
+      </article>`;
+  }
+  document.getElementById('project-list').innerHTML = PROJECTS.map(projectBlock).join("");
+
+  /* year */
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  /* close mobile menu on click */
+  document.querySelectorAll('#nl a').forEach(a=>a.addEventListener('click',()=>document.getElementById('nl').classList.remove('open')));
+
+  /* scroll reveal */
+  const io = new IntersectionObserver((es)=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
